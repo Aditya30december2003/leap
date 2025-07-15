@@ -2,12 +2,11 @@
 import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { Mail, Database, Webhook, Filter, Send } from "lucide-react"
+import { AiOutlineOpenAI } from "react-icons/ai";
 
 // Custom ChatGPT Icon Component (removed dependency on react-icons)
-const ChatGPTIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.078 6.078 0 0 0 6.283 2.9 5.952 5.952 0 0 0 2.787.688 6.02 6.02 0 0 0 2.978-.806 6.156 6.156 0 0 0 4.27-2.094 5.979 5.979 0 0 0 3.604-2.905 6.019 6.019 0 0 0-.256-6.99l-.023-.037zM12.773 4.2c.954 0 1.76.65 1.76 1.45s-.806 1.45-1.76 1.45-1.76-.65-1.76-1.45.806-1.45 1.76-1.45z"/>
-  </svg>
+const ChatGPTIcon = () => (
+  <AiOutlineOpenAI size={25}/>
 )
 
 // Custom WhatsApp Icon Component
@@ -19,52 +18,75 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export function WorkflowAnimation() {
   const mountRef = useRef<HTMLDivElement>(null)
-  const animationIdRef = useRef<number | null>(null) // Fix: provide initial value
+  const animationIdRef = useRef<number | null>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  const isInitializedRef = useRef(false)
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 })
   const [isMobile, setIsMobile] = useState(false)
 
-  // Track screen size changes
+  // Track screen size changes with debouncing
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+
     const updateScreenSize = () => {
-      if (mountRef.current) {
-        const rect = mountRef.current.getBoundingClientRect()
-        setScreenSize({ width: rect.width, height: rect.height })
-        setIsMobile(rect.width < 768)
-      }
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        if (mountRef.current) {
+          const rect = mountRef.current.getBoundingClientRect()
+          setScreenSize({ width: rect.width, height: rect.height })
+          setIsMobile(rect.width < 768)
+        }
+      }, 100) // Debounce to prevent too frequent updates
     }
 
     updateScreenSize()
     window.addEventListener('resize', updateScreenSize)
-    return () => window.removeEventListener('resize', updateScreenSize)
+    return () => {
+      clearTimeout(timeoutId)
+      window.removeEventListener('resize', updateScreenSize)
+    }
   }, [])
 
   useEffect(() => {
-    if (!mountRef.current || screenSize.width === 0) return
+    if (!mountRef.current || screenSize.width === 0 || isInitializedRef.current) return
+
+    // Set initialization flag
+    isInitializedRef.current = true
 
     // Three.js background animation setup
     const scene = new THREE.Scene()
+    sceneRef.current = scene
+    
     const camera = new THREE.PerspectiveCamera(75, screenSize.width / screenSize.height, 0.1, 1000)
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    rendererRef.current = renderer
 
     renderer.setSize(screenSize.width, screenSize.height)
     renderer.setClearColor(0x000000, 0)
 
-    // Create background canvas
-    const bgCanvas = document.createElement("canvas")
-    bgCanvas.style.position = "absolute"
-    bgCanvas.style.top = "0"
-    bgCanvas.style.left = "0"
-    bgCanvas.style.width = "100%"
-    bgCanvas.style.height = "100%"
-    bgCanvas.style.zIndex = "1"
-    mountRef.current.appendChild(bgCanvas)
-    mountRef.current.appendChild(renderer.domElement)
+    // Create background canvas container
+    const bgContainer = document.createElement("div")
+    bgContainer.style.position = "absolute"
+    bgContainer.style.top = "0"
+    bgContainer.style.left = "0"
+    bgContainer.style.width = "100%"
+    bgContainer.style.height = "100%"
+    bgContainer.style.zIndex = "1"
+    bgContainer.style.pointerEvents = "none"
+    
+    bgContainer.appendChild(renderer.domElement)
     renderer.domElement.style.position = "absolute"
     renderer.domElement.style.zIndex = "2"
 
+    // Only add to DOM if mount exists
+    if (mountRef.current) {
+      mountRef.current.appendChild(bgContainer)
+    }
+
     // Create floating particles for background
     const particleGeometry = new THREE.BufferGeometry()
-    const particleCount = isMobile ? 50 : 100 // Reduce particles on mobile
+    const particleCount = isMobile ? 50 : 100
     const positions = new Float32Array(particleCount * 3)
     const velocities = new Float32Array(particleCount * 3)
 
@@ -93,7 +115,6 @@ export function WorkflowAnimation() {
 
     camera.position.z = 12
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let time = 0
     const animate = () => {
       time += 0.003
@@ -123,17 +144,38 @@ export function WorkflowAnimation() {
     animate()
 
     return () => {
+      // Cleanup Three.js resources
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current)
+        animationIdRef.current = null
       }
-      renderer.dispose()
-      if (mountRef.current) {
-        while (mountRef.current.firstChild) {
-          mountRef.current.removeChild(mountRef.current.firstChild)
-        }
+      
+      if (rendererRef.current) {
+        rendererRef.current.dispose()
+        rendererRef.current = null
+      }
+      
+      if (sceneRef.current) {
+        sceneRef.current.clear()
+        sceneRef.current = null
+      }
+      
+      // Reset initialization flag
+      isInitializedRef.current = false
+      
+      // Clean up DOM elements safely
+      if (mountRef.current && bgContainer && mountRef.current.contains(bgContainer)) {
+        mountRef.current.removeChild(bgContainer)
       }
     }
   }, [screenSize, isMobile])
+
+  // Handle renderer resize separately
+  useEffect(() => {
+    if (rendererRef.current && screenSize.width > 0 && screenSize.height > 0) {
+      rendererRef.current.setSize(screenSize.width, screenSize.height)
+    }
+  }, [screenSize])
 
   const getIcon = (iconName: string) => {
     const iconSize = isMobile ? "w-4 h-4" : "w-6 h-6"
