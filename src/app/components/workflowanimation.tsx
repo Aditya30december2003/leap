@@ -4,7 +4,7 @@ import * as THREE from "three"
 import { Mail, Database, Webhook, Filter, Send } from "lucide-react"
 import { AiOutlineOpenAI } from "react-icons/ai";
 
-// Custom ChatGPT Icon Component (removed dependency on react-icons)
+// Custom ChatGPT Icon Component (removed dependency on react-icons)......;nklmkm
 const ChatGPTIcon = () => (
   <AiOutlineOpenAI size={25}/>
 )
@@ -113,11 +113,12 @@ export function WorkflowAnimation() {
     const particles = new THREE.Points(particleGeometry, particleMaterial)
     scene.add(particles)
 
-    camera.position.z = 12
+    camera.position.z = 13
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let time = 0
     const animate = () => {
-      time += 0.003
+      time += 0.003 //made
 
       // Animate background particles
       const positions = particles.geometry.attributes.position.array as Float32Array
@@ -364,7 +365,7 @@ export function WorkflowAnimation() {
 
       {/* Enhanced Overlay UI - responsive */}
       <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20">
-        <div className="bg-red-900/30 border border-red-500/50 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-red-400 text-xs backdrop-blur-md">
+        <div className="bg-red-900/40 border border-red-500/50 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-red-400 text-xs backdrop-blur-md">
           <div className="flex items-center gap-1 sm:gap-2">
             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             <span className="hidden sm:inline">Live Workflow • {nodes.length} nodes</span>
