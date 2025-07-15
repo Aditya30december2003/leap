@@ -5,8 +5,8 @@ import { Mail, Database, Webhook, Filter, Send } from "lucide-react"
 import { AiOutlineOpenAI } from "react-icons/ai";
 
 // Custom ChatGPT Icon Component (removed dependency on react-icons)......;nklmkm
-const ChatGPTIcon = () => (
-  <AiOutlineOpenAI size={25}/>
+const ChatGPTIcon = ({ className }: { className?: string }) => (
+  <AiOutlineOpenAI size={25} className={className}/>
 )
 
 // Custom WhatsApp Icon Component
