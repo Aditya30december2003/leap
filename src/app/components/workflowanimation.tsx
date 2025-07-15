@@ -93,6 +93,7 @@ export function WorkflowAnimation() {
 
     camera.position.z = 12
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let time = 0
     const animate = () => {
       time += 0.003

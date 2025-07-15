@@ -88,7 +88,7 @@ export function TestimonialsSection() {
                 <div
                   className={`text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed transition-opacity duration-500 ${isTyping ? "opacity-50" : "opacity-100"}`}
                 >
-                  "{testimonials[currentTestimonial].content}"
+                  {testimonials[currentTestimonial].content}
                 </div>
 
                 {/* Rating */}

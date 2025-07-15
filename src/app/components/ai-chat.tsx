@@ -53,7 +53,7 @@ export function AIChat() {
     }, 1500)
   }
 
-  const getAIResponse = (input: string): string => {
+  const getAIResponse = (): string => {
     const responses = [
       "Great question! Our AI scheduling bots can handle complex appointment booking scenarios 24/7. Would you like to schedule a demo?",
       "Our lead generation tools are specifically designed for talent acquisition firms. They can increase your candidate pipeline by up to 300%.",
