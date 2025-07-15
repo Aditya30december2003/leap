@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Menu, X, Sun, Moon } from 'lucide-react'
-import { useTheme } from "@/app/components/theme-provider"
+import { useTheme } from 'next-themes'
+
 
 const navItems = [
   { name: "Home", href: "#home" },
