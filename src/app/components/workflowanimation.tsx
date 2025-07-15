@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { Mail, Database, Webhook, Filter, Send } from "lucide-react"
-import { AiOutlineOpenAI } from "react-icons/ai";
 
-
-// Custom ChatGPT Icon Component
-const ChatGPTIcon = () => (
- < AiOutlineOpenAI size={30}/>
+// Custom ChatGPT Icon Component (removed dependency on react-icons)
+const ChatGPTIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.078 6.078 0 0 0 6.283 2.9 5.952 5.952 0 0 0 2.787.688 6.02 6.02 0 0 0 2.978-.806 6.156 6.156 0 0 0 4.27-2.094 5.979 5.979 0 0 0 3.604-2.905 6.019 6.019 0 0 0-.256-6.99l-.023-.037zM12.773 4.2c.954 0 1.76.65 1.76 1.45s-.806 1.45-1.76 1.45-1.76-.65-1.76-1.45.806-1.45 1.76-1.45z"/>
+  </svg>
 )
 
 // Custom WhatsApp Icon Component
@@ -19,7 +19,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export function WorkflowAnimation() {
   const mountRef = useRef<HTMLDivElement>(null)
-  const animationIdRef = useRef<number>()
+  const animationIdRef = useRef<number | null>(null) // Fix: provide initial value
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 })
   const [isMobile, setIsMobile] = useState(false)
 
