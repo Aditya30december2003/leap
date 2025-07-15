@@ -2,12 +2,18 @@
 import React, { useState, useEffect } from 'react';
 
 // ✅ Corrected CalendlyEmbed component
-const CalendlyEmbed = ({ url, height = "700px" }) => {
+interface CalendlyEmbedProps {
+  url: string;
+  height?: string;
+}
+
+const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({ url, height = "700px" }) => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
     script.async = true;
     document.head.appendChild(script);
+
 
     return () => {
       const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
