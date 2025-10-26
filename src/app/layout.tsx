@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import LokiIntro from "./components/LokiIntro";
+import 'aos/dist/aos.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,10 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Leap",
+  title: "Phoenix",
   description: "",
   icons: {
-    icon: "/favicon.ico", // or '/favicon.png' if you prefer
+    icon: "/favicon.ico",
   },
 };
 
@@ -27,12 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <LokiIntro>
+          {children}
+          </LokiIntro>
       </body>
     </html>
   );
 }
-

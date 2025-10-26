@@ -6,11 +6,11 @@ import { ContactSection } from "@/app/components/contact-section"
 import { Footer } from "@/app/components/footer"
 // import { AIChat } from "@/app/components/ai-chat"
 import {Navbar} from '@/app/components/navbar'
-
+import Testimonials from "./components/testimonials"
 export default function Home() {
   return (
    <>
- <div className="bg-black">
+ <div className="bg-black scroll-smooth">
       {/* Theme Toggle */}
       
       <div>
@@ -22,6 +22,7 @@ export default function Home() {
       <HeroSection/>
       <ServicesSection/>
       <PricingSection/>
+      <Testimonials/>
       <ContactSection/>
       <Footer/>
       </main>

@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { Star, Quote } from "lucide-react"
@@ -10,7 +9,7 @@ const testimonials = [
     role: "CEO, TechRecruit Pro",
     company: "TechRecruit Pro",
     content:
-      "Leap transformed our recruitment process. We've increased our lead generation by 300% and our scheduling efficiency by 500%. The AI is incredibly intuitive.",
+      "Phoenix transformed our recruitment process. We've increased our lead generation by 300% and our scheduling efficiency by 500%. The AI is incpurpleibly intuitive.",
     rating: 5,
     avatar: "/placeholder.svg?height=60&width=60",
   },
@@ -28,7 +27,7 @@ const testimonials = [
     role: "Founder",
     company: "StartupStaff",
     content:
-      "As a small recruitment firm, Leap gave us enterprise-level capabilities. The ROI was immediate - we saw results within the first week of implementation.",
+      "As a small recruitment firm, Phoenix gave us enterprise-level capabilities. The ROI was immediate - we saw results within the first week of implementation.",
     rating: 5,
     avatar: "/placeholder.svg?height=60&width=60",
   },
@@ -68,7 +67,7 @@ export function TestimonialsSection() {
             Client Success Stories
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            See how businesses are leaping ahead with our AI solutions
+            See how businesses are Phoenixing ahead with our AI solutions
           </p>
         </div>
 

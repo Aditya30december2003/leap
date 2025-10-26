@@ -1,89 +1,94 @@
-"use client"
-import { useState, useEffect } from "react"
-import { Button } from "@/app/components/ui/button"
-import { Calendar, Zap } from "lucide-react"
-import { WorkflowAnimation } from "../components/workflowanimation"
+"use client";
+import { useState, useEffect } from "react";
+import { Button } from "@/app/components/ui/button";
+import { Calendar, Zap } from "lucide-react";
+import MorphToAI from "@/app/components/MorphToAI";
+import SubtleBg3D from "./SubtleBg3D";
 
 export function HeroSection() {
-  const [glitchText, setGlitchText] = useState("Just automate it with Leap")
+  const [glitchText, setGlitchText] = useState("Just automate it with Phoenix");
 
   useEffect(() => {
+    // Initialize AOS
+    const initAOS = async () => {
+      const AOS = (await import("aos")).default;
+      AOS.init({
+        duration: 800,
+        once: true,
+        easing: 'ease-out-cubic',
+      });
+    };
+    initAOS();
+
+    // Glitch effect
     const interval = setInterval(() => {
-      const glitchChars = "!@#$%^&*()_+-=[]{}|;:,.<>?"
-      const originalText = "Just automate it with Leap"
-      let glitched = originalText
-
+      const glitchChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+      const originalText = "Just automate it with Phoenix";
       if (Math.random() > 0.95) {
-        const randomIndex = Math.floor(Math.random() * originalText.length)
-        const randomChar = glitchChars[Math.floor(Math.random() * glitchChars.length)]
-        glitched = originalText.substring(0, randomIndex) + randomChar + originalText.substring(randomIndex + 1)
-        setGlitchText(glitched)
-        setTimeout(() => setGlitchText(originalText), 100)
+        const i = Math.floor(Math.random() * originalText.length);
+        const c = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+        const g = originalText.substring(0, i) + c + originalText.substring(i + 1);
+        setGlitchText(g);
+        setTimeout(() => setGlitchText(originalText), 100);
       }
-    }, 2000)
-
-    return () => clearInterval(interval)
-  }, [])
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 py-20 bg-black overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-red-800/20 via-black to-black z-0" />
+    <section
+      id="home"
+      className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-4 lg:px-8 py-20 overflow-hidden bg-black"
+    >
+      {/* ONE shapurple background for both sides (no seam) */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(80%_60%_at_20%_40%,rgba(168,85,247,0.18),rgba(0,0,0,0.6)_60%,#000_100%)]" />
 
-      {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full">
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-4 mt-12">
+      <SubtleBg3D />
+
+      {/* LEFT: content */}
+      <div className="relative z-10 w-full lg:w-1/2 max-w-2xl text-center lg:text-left">
+        <h1 
+          className="text-5xl md:text-7xl font-bold text-white leading-tight mb-4"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           <span className="inline-block">{glitchText}</span>
         </h1>
-
-        <p className="text-xl md:text-2xl text-gray-400 mb-8">
+        <p 
+          className="text-xl md:text-2xl text-gray-400 mb-8"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
           The workflow and website builder loved by founders, startups, and solo makers.
         </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-          <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 text-lg rounded-full">
+        <div 
+          className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center"
+          data-aos="fade-up"
+          data-aos-delay="600"
+        >
+          <Button className="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-4 text-lg rounded-full transform transition-all duration-300 hover:scale-105">
             <Calendar className="mr-2 h-5 w-5" />
             Schedule a Demo
           </Button>
           <Button
-            size="lg"
             variant="outline"
-            className="border-red-500 text-red-400 hover:bg-red-600 hover:text-white font-bold px-8 py-4 text-lg rounded-full bg-transparent"
+            className="border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white font-bold px-8 py-4 text-lg rounded-full bg-transparent transform transition-all duration-300 hover:scale-105"
           >
             <Zap className="mr-2 h-5 w-5" />
             Explore Features
           </Button>
         </div>
-
-        {/* Screen-like Product Preview with Workflow Animation */}
-        <div className="relative w-full lg:w-[75%] mx-auto">
-          {/* Screen Frame */}
-          <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl p-6 shadow-2xl border border-red-900/50">
-            {/* Screen Header */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <div className="flex-1 bg-gray-700 rounded px-3 py-1 text-sm text-gray-300 text-left ml-4">
-                leap-workflow-builder.app
-              </div>
-            </div>
-
-            {/* Screen Content */}
-            <div className="bg-black rounded-lg overflow-hidden border border-red-900/30 h-[400px] relative">
-              <WorkflowAnimation/>
-            </div>
-          </div>
-
-          {/* Screen Glow Effect */}
-          <div className="absolute inset-0 bg-red-600/20 rounded-2xl blur-xl -z-10 animate-pulse"></div>
-        </div>
       </div>
 
-      {/* Red Glow Underline */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-[4px] w-48 bg-red-600 blur-lg animate-pulse z-0" />
+      {/* RIGHT: animation */}
+      <div 
+        className="relative z-10 w-full lg:w-1/2 mt-12 lg:mt-0"
+        data-aos="fade-left"
+        data-aos-delay="800"
+        data-aos-duration="1000"
+      >
+        <MorphToAI />
+      </div>
     </section>
-  )
+  );
 }

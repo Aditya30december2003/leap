@@ -45,75 +45,49 @@ export function Navbar() {
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "Services", href: "#services" },
-    { name: "Portfolio", href: "#portfolio" },
     { name: "Pricing", href: "#pricing" },
     { name: "Book a Call", href: "#book" },
-    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <header className="w-full fixed top-0 left-0 z-50  text-white shadow-lg">
+    <header className="w-full fixed top-0 left-0 z-50 text-white shadow-lg">
       <div className="flex items-center justify-between px-4 py-4 md:px-8 lg:px-12 bg-black">
-        {/* Logo with tube light effect */}
-        <div className="font-bold relative " style={{ fontSize: 'clamp(1.5rem, 4vw, 5rem)' }}>
-          <span 
-            className={`relative transition-all duration-100 ${
-              isFlickering 
-                ? 'text-gray-500' 
-                : 'text-red-400'
-            }`}
-            style={{
-              textShadow: isFlickering 
-                ? 'none' 
-                : `
-                  0 0 5px #ff0000,
-                  0 0 10px #ff0000,
-                  0 0 15px #ff0000,
-                  0 0 20px #ff0000,
-                  0 0 25px #ff0000,
-                  0 0 30px #ff0000,
-                  0 0 35px #ff0000
-                `
-            }}
-          >
-            Leap
-          </span>
-          {/* Tube light underline */}
-          {/* <div 
-            className={`absolute bottom-[-6px] md:bottom-[-8px] lg:bottom-[-10px] left-0 w-full h-[2px] md:h-[3px] lg:h-[4px] rounded-full transition-all duration-100 ${
-              isFlickering 
-                ? 'bg-gray-700 shadow-none' 
-                : 'bg-red-500 shadow-[0_0_10px_#ff0000,0_0_20px_#ff0000,0_0_30px_#ff0000]'
-            }`}
-          /> */}
-          {/* Additional glow elements for tube light effect */}
-          {!isFlickering && (
-            <>
-              <div className="absolute -inset-1 bg-red-500 opacity-20 blur-sm rounded" />
-              <div className="absolute -inset-2 bg-red-600 opacity-10 blur-md rounded" />
-            </>
-          )}
+        {/* Logo and left-aligned nav items */}
+        <div className="flex items-center gap-8 lg:gap-12">
+          {/* Logo */}
+          <div className="font-bold relative">
+            <span className="text-white font-bold text-[3rem]">
+              Phoenix
+            </span>
+          </div>
+
+          {/* Desktop Nav - Left aligned with logo */}
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
+            {navLinks.slice(0, 3).map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm lg:text-base hover:text-purple-400 transition-colors duration-200 font-medium"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
         </div>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-4 lg:gap-6">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm lg:text-base hover:text-red-400 transition-colors duration-200 font-medium"
-            >
-              {link.name}
-            </a>
-          ))}
-          <button className="bg-white text-black text-sm lg:text-base font-semibold px-4 lg:px-6 py-2 lg:py-2.5 rounded-full hover:bg-red-500 hover:text-white transition-all duration-200 ml-2">
-            Get Started
-          </button>
-        </nav>
+        {/* Right side - Book a Call with purple highlight */}
+        <div className="hidden md:block">
+          <a
+            href="#book"
+            className="bg-purple-500 text-white text-sm lg:text-base font-semibold px-4 lg:px-6 py-2 lg:py-2.5 rounded-full hover:bg-purple-700 transition-all duration-200"
+          >
+            Book a Call
+          </a>
+        </div>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white hover:text-red-400 transition-colors duration-200"
+          className="md:hidden text-white hover:text-purple-400 transition-colors duration-200"
           onClick={() => setOpen(!open)}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
@@ -123,22 +97,24 @@ export function Navbar() {
       {/* Mobile Nav */}
       {open && (
         <div className="md:hidden bg-black px-4 py-6 space-y-4 absolute w-full left-0 top-full z-40 border-t border-gray-800 shadow-lg">
-          {navLinks.map((link) => (
+          {navLinks.slice(0, 3).map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="block text-base hover:text-red-400 transition-colors duration-200 font-medium py-2"
+              className="block text-base hover:text-purple-400 transition-colors duration-200 font-medium py-2"
               onClick={() => setOpen(false)}
             >
               {link.name}
             </a>
           ))}
-          <button 
-            className="w-full bg-white text-black text-base font-semibold px-4 py-3 rounded-full hover:bg-red-500 hover:text-white transition-all duration-200 mt-4"
+          {/* Mobile Book a Call with highlight */}
+          <a
+            href="#book"
+            className="block w-full bg-purple-500 text-white text-base font-semibold px-4 py-3 rounded-full hover:bg-purple-700 transition-all duration-200 text-center mt-4"
             onClick={() => setOpen(false)}
           >
-            Get Started
-          </button>
+            Book a Call
+          </a>
         </div>
       )}
     </header>
