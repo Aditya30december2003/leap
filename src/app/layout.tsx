@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Phoenix",
+  title: "PhoenixLabs",
   description: "",
   icons: {
     icon: "/favicon.ico",
@@ -30,9 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* <LokiIntro> */}
+        <LokiIntro>
           {children}
-          {/* </LokiIntro> */}
+        </LokiIntro>
       </body>
     </html>
   );
