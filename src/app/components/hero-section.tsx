@@ -48,14 +48,14 @@ export function HeroSection() {
       {/* LEFT: content */}
       <div className="relative z-10 w-full lg:w-1/2 max-w-2xl text-center lg:text-left">
         <h1 
-          className="text-5xl md:text-7xl font-bold text-white leading-tight mb-4"
+          className="text-4xl md:text-7xl font-bold text-white leading-tight mb-4"
           data-aos="fade-up"
           data-aos-delay="200"
         >
           <span className="inline-block">{glitchText}</span>
         </h1>
         <p 
-          className="text-xl md:text-2xl text-gray-400 mb-8"
+          className="text-lg md:text-2xl text-gray-400 mb-8"
           data-aos="fade-up"
           data-aos-delay="400"
         >

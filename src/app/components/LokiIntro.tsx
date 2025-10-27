@@ -1,122 +1,161 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 
 export default function LokiIntro({ children }: { children: React.ReactNode }) {
-  const [currentLetters, setCurrentLetters] = useState<string[]>(Array(7).fill(""));
+  const LETTERS = 7; // P H O E N I X
+  const [currentLetters, setCurrentLetters] = useState<string[]>(
+    Array(LETTERS).fill("") // keep blanks so we can size per-letter without jump
+  );
   const [isComplete, setIsComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const timeoutsRef = useRef<number[]>([]);
 
   // Writing systems for each letter of PHOENIX
   const letterSystems = [
-    // P - Different writing systems
     ["P", "Φ", "Π", "𐤐", "П", "ᛒ", "ᛈ", "פ", "ف", "Ｐ"],
-    // H - Different writing systems  
     ["H", "Η", "ㅎ", "Հ", "ᚺ", "𐌇", "ᚺ", "ה", "ه", "Ｈ"],
-    // O - Different writing systems
     ["O", "Ω", "Ⲟ", "Օ", "ᛟ", "𐍉", "ᛟ", "וֹ", "و", "Ｏ"],
-    // E - Different writing systems
     ["E", "Ε", "Є", "𐌄", "ᛖ", "エ", "ᛖ", "е", "ي", "Ｅ"],
-    // N - Different writing systems
     ["N", "Ν", "ᠨ", "Ո", "ᚾ", "ナ", "ᚾ", "נ", "ن", "Ｎ"],
-    // I - Different writing systems
     ["I", "Ι", "丨", "Ӏ", "ᛁ", "イ", "ᛁ", "ي", "ي", "Ｉ"],
-    // X - Different writing systems
     ["X", "Χ", "乂", "Ӿ", "ᛪ", "メ", "ᛪ", "كس", "خ", "Ｘ"],
   ];
 
   useEffect(() => {
     let currentIndex = 0;
-    const totalStages = 70; // 10 seconds with fast changes
+    const totalStages = 70;
     let currentLetterIndex = 0;
-    
+
     const advanceStage = () => {
       if (currentIndex < totalStages) {
-        // Focus on one letter at a time
         const newLetters = [...currentLetters];
-        
-        // Change only the current focused letter rapidly
-        const currentSystem = letterSystems[currentLetterIndex];
-        const randomCharIndex = Math.floor(Math.random() * currentSystem.length);
-        newLetters[currentLetterIndex] = currentSystem[randomCharIndex];
-        
+        const system = letterSystems[currentLetterIndex];
+        const char = system[Math.floor(Math.random() * system.length)];
+        newLetters[currentLetterIndex] = char;
         setCurrentLetters(newLetters);
-        
+
         currentIndex++;
-        
-        // Move to next letter after some changes
+
+        // move focus letter after some changes
         if (currentIndex % 10 === 0) {
-          currentLetterIndex = (currentLetterIndex + 1) % 7;
+          currentLetterIndex = (currentLetterIndex + 1) % LETTERS;
         }
-        
-        // Speed up as we progress
+
         const delay = currentIndex < 40 ? 120 : 80;
-        setTimeout(advanceStage, delay);
+        const t = window.setTimeout(advanceStage, delay);
+        timeoutsRef.current.push(t);
       } else {
-        // Final stage - show PHOENIX clearly
+        // lock to PHOENIX
         setCurrentLetters(["P", "H", "O", "E", "N", "I", "X"]);
         setIsComplete(true);
-        
-        // After showing the final text, wait a bit then show main content
-        setTimeout(() => {
-          setShowContent(true);
-        }, 1500);
+        const t = window.setTimeout(() => setShowContent(true), 1500);
+        timeoutsRef.current.push(t);
       }
     };
 
-    // Start the sequence
-    setTimeout(advanceStage, 500);
+    const start = window.setTimeout(advanceStage, 500);
+    timeoutsRef.current.push(start);
+
+    return () => {
+      // clear pending timers on unmount
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // If intro is complete and we should show content, render children
-  if (showContent) {
-    return <>{children}</>;
-  }
+  // Generate particle props once (no re-randomizing on rerenders)
+  const particles = useMemo(() => {
+    return Array.from({ length: 26 }).map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${(i * 0.35).toFixed(2)}s`,
+      duration: `${(10 + Math.random() * 8).toFixed(2)}s`,
+      size: `${Math.random() * 2 + 1}px`,
+      opacity: 0.25 + Math.random() * 0.25,
+    }));
+  }, []);
 
-  // Otherwise show the intro animation
+  if (showContent) return <>{children}</>;
+
   return (
-    <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden">
-      {/* Main title sequence - one letter changing at a time */}
-      <div className="relative z-10">
-        <div className="flex space-x-4 md:space-x-8 items-center justify-center">
-          {currentLetters.map((char, index) => (
-            <div
-              key={index}
-              className="transition-all duration-200"
-            >
-              <div 
-                className="text-5xl md:text-8xl lg:text-9xl font-bold mb-2 min-w-[70px] text-center"
+    <div
+      className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+      style={{
+        padding:
+          "env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)",
+      }}
+    >
+      {/* Title sequence */}
+      <div className="relative z-10 w-full px-3 sm:px-6">
+        <div
+          className="mx-auto flex items-center justify-center"
+          style={{
+            gap: "clamp(6px, 2.5vw, 28px)", // responsive spacing
+            maxWidth: "min(92vw, 1200px)", // contain within viewport
+          }}
+        >
+          {currentLetters.map((char, idx) => (
+            <div key={idx} className="transition-all duration-200">
+              <div
+                className="font-bold text-center select-none"
                 style={{
-                  color: isComplete ? '#a855f7' : '#a855f7',
-                  textShadow: isComplete ? 
-                    '0 0 20px #a855f7, 0 0 40px #a855f7' : 
-                    '0 0 10px #a855f7',
+                  // Responsive font-size that always fits mobile width
+                  fontSize: "clamp(36px, 12vw, 120px)",
+                  lineHeight: 1,
+                  // Each letter box gets a responsive width so the row fits on very small screens
+                  minWidth: "clamp(32px, 12vw, 120px)",
+                  color: "#a855f7",
+                  textShadow: isComplete
+                    ? "0 0 12px #a855f7, 0 0 24px #a855f7, 0 0 40px rgba(168,85,247,.65)"
+                    : "0 0 8px #a855f7",
                   opacity: char ? 1 : 0,
-                  transform: `scale(${isComplete ? 1.1 : 1})`,
-                  transition: 'all 0.3s ease-out'
+                  transform: `scale(${isComplete ? 1.06 : 1})`,
+                  transition: "opacity .2s ease, transform .3s ease",
+                  letterSpacing: "0.02em",
                 }}
               >
-                {char}
+                {char || "\u00A0" /* keep width when blank */}
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Simple purple particles in background */}
-      <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
-          <div
+      {/* Subtle purple particles (responsive, low-contrast) */}
+      <div className="absolute inset-0 pointer-events-none">
+        {particles.map((p, i) => (
+          <span
             key={i}
-            className="absolute w-1 h-1 bg-purple-500 rounded-full animate-float"
+            className="absolute rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.5}s`,
-              opacity: 0.4
+              left: p.left,
+              top: p.top,
+              width: p.size,
+              height: p.size,
+              background: "rgba(168,85,247,0.55)",
+              filter: "drop-shadow(0 0 6px rgba(168,85,247,0.6))",
+              opacity: p.opacity,
+              animation: `floatY ${p.duration} ease-in-out ${p.delay} infinite`,
             }}
           />
         ))}
       </div>
+
+      {/* Local keyframes for floating dots */}
+      <style jsx>{`
+        @keyframes floatY {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-18px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+      `}</style>
     </div>
   );
 }
