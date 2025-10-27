@@ -56,7 +56,7 @@ export function Navbar() {
         <div className="flex items-center gap-8 lg:gap-12">
           {/* Logo */}
           <div className="font-bold relative">
-            <span className="text-white font-bold text-[1.3rem] md:text-[3rem]">
+            <span className="text-white font-bold text-[1.3rem] md:text-[2.5rem]">
               Phoenix
             </span>
           </div>

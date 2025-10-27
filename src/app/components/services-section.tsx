@@ -66,11 +66,11 @@ export function ServicesSection() {
       });
     };
     initAOS();
-  }, []);
+  }, []); 
 
   return (
-    <div id="services">
-      <section id="#services" className="py-24 px-4 bg-black text-white relative overflow-hidden scroll-mt-24">
+   
+      <section id="services" className="py-24 px-4 bg-black text-white relative overflow-hidden scroll-mt-24">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div 
@@ -153,6 +153,6 @@ export function ServicesSection() {
           </div>
         </div>
       </section>
-    </div>
+    
   );
 }

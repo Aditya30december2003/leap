@@ -137,7 +137,7 @@ export function ContactSection() {
               >
                 <CalendlyEmbed 
                   url={calendlyUrls.consultation}
-                  height="600px"
+                  height="400px"
                 />
               </div>
             </div>

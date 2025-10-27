@@ -68,14 +68,16 @@ export function HeroSection() {
         >
           <Button className="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-4 text-lg rounded-full transform transition-all duration-300 hover:scale-105">
             <Calendar className="mr-2 h-5 w-5" />
+            <a href="#book">
             Schedule a Demo
+            </a>
           </Button>
           <Button
             variant="outline"
             className="border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white font-bold px-8 py-4 text-lg rounded-full bg-transparent transform transition-all duration-300 hover:scale-105"
           >
             <Zap className="mr-2 h-5 w-5" />
-            Explore Features
+            <a href="#services">Explore Services</a>
           </Button>
         </div>
       </div>
