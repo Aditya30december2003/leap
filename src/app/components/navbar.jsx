@@ -46,10 +46,10 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Services", href: "#services" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Book a Call", href: "#book" },
+    { name: "Home", href: "/#home" },
+    { name: "Services", href: "/#services" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Book a Call", href: "/#book" },
   ];
 
   return (
@@ -72,7 +72,7 @@ export function Navbar() {
                 "transition-opacity duration-150",
               ].join(" ")}
             >
-              Phoenix
+              PhoenixLabs
             </span>
           </div>
 

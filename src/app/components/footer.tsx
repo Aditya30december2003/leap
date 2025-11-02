@@ -1,18 +1,35 @@
-// If this file isn't already a client component and your Button/Input are client,
-// add the directive. If everything renders fine today, you can omit it.
-// "use client";
+"use client";
 
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Linkedin, Mail } from "lucide-react";
+import { useState } from "react";
 
 // ⬇️ Add the same display font used elsewhere
 import { Orbitron } from "next/font/google";
 const phoenixFont = Orbitron({ subsets: ["latin"], weight: ["700"] });
 
 export function Footer() {
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Create mailto link with subject and body
+    const subject = "Inquiry from Phoenix Website";
+    const body = message || "Hello, I would like to get more information about your services.";
+    
+    const mailtoLink = `mailto:phoenixlabs.agency@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.open(mailtoLink, '_blank');
+    
+    // Clear the input after sending
+    setMessage("");
+  };
+
   return (
-    <footer className="relative border-t border-purple-600/30 bg-black/90 backdrop-blur-sm">
+    <footer className="relative border-t border-purple-600/30 bg-black">
       {/* Pixel Line Divider */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-purple-400 to-purple-600" />
 
@@ -42,13 +59,12 @@ export function Footer() {
             <div className="space-y-4">
               <h4 className="text-white font-semibold">Get In Touch</h4>
               <form
-                action="mailto:leo10demigod@gmail.com"
-                method="GET"
-                encType="text/plain"
+                onSubmit={handleSubmit}
                 className="flex flex-col sm:flex-row gap-2"
               >
                 <Input
-                  name="body"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   placeholder="Your message..."
                   className="bg-black/50 border border-purple-600/40 text-white placeholder-gray-400 focus:border-purple-400 flex-1"
                 />
@@ -70,7 +86,7 @@ export function Footer() {
               {[
                 { name: "Home", href: "#home" },
                 { name: "Services", href: "#services" },
-                { name: "Pricing", href: "#pricing" },
+                { name: "Pricing", href: "/pricing" },
                 { name: "Book a Call", href: "#book" },
               ].map((link) => (
                 <li key={link.name}>
@@ -93,13 +109,13 @@ export function Footer() {
             <div className="space-y-4 mb-6">
               {/* Email */}
               <a
-                href="mailto:leo10demigod@gmail.com"
+                href="mailto:phoenixlabs.agency@gmail.com"
                 className="flex items-center space-x-3 text-gray-300 hover:text-purple-400 transition-colors duration-300 group"
               >
                 <div className="w-10 h-10 bg-purple-900/50 rounded-lg flex items-center justify-center group-hover:bg-purple-800 transition-all duration-300">
                   <Mail className="h-5 w-5" />
                 </div>
-                <span className="text-sm">workemail@gmail.com</span>
+                <span className="text-sm">phoenixlabs.agency@gmail.com</span>
               </a>
 
               {/* LinkedIn */}
@@ -135,7 +151,7 @@ export function Footer() {
               "text-white font-bold text-sm tracking-wide",
             ].join(" ")}
           >
-            © 2025 Phoenix. All rights reserved.
+            © 2025 PhoenixLabs. All rights reserved.
           </p>
         </div>
       </div>

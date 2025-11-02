@@ -34,7 +34,7 @@ const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({ url, height = "100px" }) 
 
 // ✅ Main Contact Section Component
 export function ContactSection() {
-  const [activeTab, setActiveTab] = useState('inline');
+  const [activeTab] = useState('inline');
 
   // Replace with your actual Calendly URLs
   const calendlyUrls = {
@@ -157,7 +157,7 @@ export function ContactSection() {
               data-aos="fade-up"
               data-aos-delay="1300"
             >
-              workemail@gmail.com
+              phoenixlabs.agency@gmail.com
             </a>
           </p>
         </div>
