@@ -63,7 +63,7 @@ export function HeroSection() {
         </h1>
 
         <p
-          className="text-lg md:text-2xl text-gray-300 font-bold mb-8"
+          className="text-lg md:text-xl text-gray-300 font-bold mb-8"
           data-aos="fade-up"
           data-aos-delay="400"
         >
