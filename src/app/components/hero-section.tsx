@@ -48,7 +48,7 @@ export function HeroSection() {
       {/* LEFT: content */}
       <div className="relative z-10 w-full lg:w-1/2 max-w-2xl text-center lg:text-left">
         <h1
-          className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4"
+          className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4"
           data-aos="fade-up"
           data-aos-delay="200"
         >

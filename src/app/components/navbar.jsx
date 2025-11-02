@@ -62,7 +62,7 @@ export function Navbar() {
             <span
               className={[
                 phoenixFont.className,
-                "text-[1.3rem] md:text-[2.2rem] lg:text-[2.4rem]",
+                "text-[1.3rem] md:text-[2rem] lg:text-[2.2rem]",
                 "tracking-wide",
                 "text-transparent bg-clip-text",
                 "text-white",
