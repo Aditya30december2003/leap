@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect } from "react";
+import BackgroundNetwork from "./MorphToAI";
 
 const data = [
   {
     id: 1,
     name: "Rhea Kapoor",
-    role: "Founder, Lumi Studios",
+    role: "Founder",
     quote: "Phoenix helped us cut onboarding time in half. The UI feels premium and the support was exceptional.",
     rating: 5,
     initials: "RK",
@@ -14,7 +15,7 @@ const data = [
   {
     id: 2,
     name: "Samir Verma",
-    role: "Head of Product, CineFlow",
+    role: "Head of Product",
     quote: "We saw immediate lift in engagement after launching the new referral flow — shipped production-ready features lightning fast.",
     rating: 5,
     initials: "SV",
@@ -23,7 +24,7 @@ const data = [
   {
     id: 3,
     name: "Leah Martinez",
-    role: "Creative Director, FrameLab",
+    role: "Creative Director",
     quote: "The analytics dashboard is gorgeous and actionable. Design + performance — exactly what we'd hoped for.",
     rating: 5,
     initials: "LM",
@@ -62,7 +63,11 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-16 px-6 bg-black">
+    <section className="py-16 px-6 bg-black relative">
+
+      <div className="pointer-events-none absolute inset-0 -z-0">
+    <BackgroundNetwork />
+  </div>
       <div 
         className="max-w-4xl mx-auto text-center mb-12"
         data-aos="fade-up"
@@ -91,8 +96,8 @@ export default function Testimonials() {
             className={`
               relative p-6 rounded-xl border transform transition-all duration-300 hover:scale-105
               ${testimonial.featured 
-                ? "bg-gray-900 border-purple-500/30 shadow-lg shadow-purple-500/10 scale-105" 
-                : "bg-gray-900/50 border-gray-800"
+                ? "bg-white border-purple-500/30 shadow-lg shadow-purple-500/10 scale-105" 
+                : "bg-white border-gray-800"
               }
             `}
             data-aos="fade-up"
@@ -105,7 +110,7 @@ export default function Testimonials() {
                 data-aos="zoom-in"
                 data-aos-delay="800"
               >
-                <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-medium transform transition-transform duration-300 hover:scale-110">
+                <span className="bg-purple-600 text-black px-3 py-1 rounded-full text-xs font-medium transform transition-transform duration-300 hover:scale-110">
                   Featured
                 </span>
               </div>
@@ -115,8 +120,8 @@ export default function Testimonials() {
             <div className="flex items-start gap-4 mb-4">
               <div 
                 className={`
-                  w-12 h-12 rounded-lg flex items-center justify-center text-white font-semibold transform transition-transform duration-300 hover:scale-110
-                  ${testimonial.featured ? "bg-purple-600" : "bg-gray-800"}
+                  w-12 h-12 rounded-lg flex items-center justify-center text-black font-semibold transform transition-transform duration-300 hover:scale-110
+                  ${testimonial.featured ? "bg-purple-600" : "bg-gray-200"}
                 `}
                 data-aos="zoom-in"
                 data-aos-delay={700 + (index * 200)}
@@ -125,14 +130,14 @@ export default function Testimonials() {
               </div>
               <div className="flex-1 text-left">
                 <h3 
-                  className="text-white font-semibold"
+                  className="text-black font-semibold"
                   data-aos="fade-right"
                   data-aos-delay={800 + (index * 200)}
                 >
                   {testimonial.name}
                 </h3>
                 <p 
-                  className="text-gray-400 text-sm"
+                  className="text-black text-sm"
                   data-aos="fade-right"
                   data-aos-delay={900 + (index * 200)}
                 >
@@ -152,7 +157,7 @@ export default function Testimonials() {
 
             {/* Quote */}
             <blockquote 
-              className="text-gray-300 text-sm leading-relaxed mb-6"
+              className="text-black text-sm leading-relaxed mb-6"
               data-aos="fade-up"
               data-aos-delay={1100 + (index * 200)}
             >

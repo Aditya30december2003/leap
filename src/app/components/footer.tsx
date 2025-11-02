@@ -1,10 +1,18 @@
-import { Button } from "@/app/components/ui/button"
-import { Input } from "@/app/components/ui/input"
-import { Linkedin, Mail} from "lucide-react"
+// If this file isn't already a client component and your Button/Input are client,
+// add the directive. If everything renders fine today, you can omit it.
+// "use client";
+
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Linkedin, Mail } from "lucide-react";
+
+// ⬇️ Add the same display font used elsewhere
+import { Orbitron } from "next/font/google";
+const phoenixFont = Orbitron({ subsets: ["latin"], weight: ["700"] });
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-purple-600/30 bg-black/80 backdrop-blur-sm">
+    <footer className="relative border-t border-purple-600/30 bg-black/90 backdrop-blur-sm">
       {/* Pixel Line Divider */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-purple-400 to-purple-600" />
 
@@ -12,12 +20,22 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-purple-300 bg-clip-text text-transparent mb-4">
+            <h3
+              className={[
+                phoenixFont.className,
+                "text-3xl font-bold mb-4",
+                "text-transparent bg-clip-text",
+                "bg-gradient-to-r from-purple-300 via-fuchsia-400 to-purple-200",
+                "drop-shadow-[0_0_12px_rgba(168,85,247,0.35)]",
+                "tracking-wide",
+              ].join(" ")}
+            >
               Phoenix
             </h3>
+
             <p className="text-gray-300 mb-6 max-w-md">
-              Revolutionizing business automation with cutting-edge AI solutions. Rise into the future of intelligent
-              scheduling and lead generation.
+              Revolutionizing business automation with cutting-edge AI solutions.
+              Rise into the future of intelligent scheduling and lead generation.
             </p>
 
             {/* Email Contact Form */}
@@ -84,17 +102,6 @@ export function Footer() {
                 <span className="text-sm">workemail@gmail.com</span>
               </a>
 
-              {/* Phone */}
-              {/* <a
-                href="tel:+1234567890"
-                className="flex items-center space-x-3 text-gray-300 hover:text-purple-400 transition-colors duration-300 group"
-              >
-                <div className="w-10 h-10 bg-purple-900/50 rounded-lg flex items-center justify-center group-hover:bg-purple-800 transition-all duration-300">
-                  <Phone className="h-5 w-5" />
-                </div>
-                <span className="text-sm">+1 (234) 567-890</span>
-              </a> */}
-
               {/* LinkedIn */}
               <a
                 href="#"
@@ -122,14 +129,16 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-purple-800 mt-12 pt-8 flex justify-between items-center">
-          <p className="text-white font-bold text-sm">
+          <p
+            className={[
+              phoenixFont.className,
+              "text-white font-bold text-sm tracking-wide",
+            ].join(" ")}
+          >
             © 2025 Phoenix. All rights reserved.
           </p>
-          {/* <div className="text-gray-400 text-sm">
-            Rising From The Ashes
-          </div> */}
         </div>
       </div>
     </footer>
-  )
+  );
 }

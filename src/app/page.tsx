@@ -1,6 +1,6 @@
 import { HeroSection } from "@/app/components/hero-section"
 import { ServicesSection } from "@/app/components/services-section"
-import { PricingSection } from "@/app/components/pricing-section"
+// import { PricingSection } from "@/app/components/pricing-section"
 // import { TestimonialsSection } from "@/app/components/testimonials-section"
 import { ContactSection } from "@/app/components/contact-section"
 import { Footer } from "@/app/components/footer"
@@ -10,7 +10,7 @@ import Testimonials from "./components/testimonials"
 export default function Home() {
   return (
    <>
- <div className="bg-black scroll-smooth">
+ <div className=" scroll-smooth">
       {/* Theme Toggle */}
       
       <div>
@@ -21,7 +21,7 @@ export default function Home() {
       <main className="relative z-10">
       <HeroSection/>
       <ServicesSection/>
-      <PricingSection/>
+      {/* <PricingSection/> */}
       <Testimonials/>
       <ContactSection/>
       <Footer/>
