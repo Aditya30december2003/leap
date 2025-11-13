@@ -13,10 +13,10 @@ export const metadata: Metadata = {
   description: "Revolutionizing business automation with cutting-edge AI solutions",
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },                   // ICO (works now)
+      { url: "/favicon-64x64.png", type: "image/png", sizes: "64x64" }, // PNG ≥48px
     ],
+    apple: "/apple-touch-icon.png",
   },
 };
 
