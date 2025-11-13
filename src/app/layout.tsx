@@ -11,11 +11,9 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   title: "PhoenixLabs",
   description: "Revolutionizing business automation with cutting-edge AI solutions",
+  alternates: { canonical: "https://phoenixlabs.agency" },
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },                   // ICO (works now)
-      { url: "/favicon-64x64.png", type: "image/png", sizes: "64x64" }, // PNG ≥48px
-    ],
+    icon: [{ url: "/favicon-64x64.png", type: "image/png", sizes: "64x64" }],
     apple: "/apple-touch-icon.png",
   },
 };
